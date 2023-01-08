@@ -51,17 +51,6 @@ def djrest_detail(request, pk):
         djrest.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
-
-
-# Create your views here.
-
-
-
-
-
-
-
 '''@csrf_exempt
 def djrest_list(request):
     """
