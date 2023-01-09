@@ -4,8 +4,8 @@ from djrest import views
 
 
 urlpatterns = [
-    path('djrest/', views.djrest_list),
-    path('djrest/<int:pk>/', views.djrest_detail),
+    path('djrest/', views.DjrestList.as_view()),
+    path('djrest/<int:pk>/', views.DjrestDetail.as_view()),
 ]
 
 
