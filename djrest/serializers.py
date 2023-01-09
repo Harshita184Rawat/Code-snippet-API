@@ -14,7 +14,7 @@ class DjrestSerializer(serializers.Serializer):
         """
         Create and return a new `djrest` instance, given the validated data.
         """
-        return djrest.objects.create(**validated_data)
+        return Djrest.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         """

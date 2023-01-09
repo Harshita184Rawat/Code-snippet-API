@@ -1,8 +1,8 @@
-#from django.shortcuts import render
-#from django.http import HttpResponse, JsonResponse
-#from django.views.decorators.csrf import csrf_exempt
-# from rest_framework.parsers import JSONParser
-# from rest_framework.decorators import api_view
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from rest_framework.decorators import api_view
 from djrest.models import Djrest
 from django.http import Http404
 from rest_framework.views import APIView
@@ -41,6 +41,7 @@ class DjrestDetail(mixins.RetrieveModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+    
     
 '''
 class DjrestList(APIView):
@@ -130,12 +131,8 @@ def djrest_detail(request, pk):
     elif request.method == 'DELETE':
         djrest.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-<<<<<<< HEAD
-
-=======
     '''
     
->>>>>>> 71cfa38 (class based views)
 '''@csrf_exempt
 def djrest_list(request):
     """
