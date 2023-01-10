@@ -11,6 +11,11 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework import mixins
 from rest_framework import generics
+from django.contrib.auth.models import User
+from djrest.serializers import UserSerializer
+from rest_framework import permissions
+from djrest.permissions import IsOwnerOrReadOnly
+
 
 
 class DjrestList(mixins.ListModelMixin,
@@ -18,12 +23,17 @@ class DjrestList(mixins.ListModelMixin,
                   generics.GenericAPIView):
     queryset = Djrest.objects.all()
     serializer_class = DjrestSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
         return self.create(request, *args, **kwargs)
+    
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
     
     
 class DjrestDetail(mixins.RetrieveModelMixin,
@@ -32,6 +42,9 @@ class DjrestDetail(mixins.RetrieveModelMixin,
                     generics.GenericAPIView):
     queryset = Djrest.objects.all()
     serializer_class = DjrestSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
+                      IsOwnerOrReadOnly]
 
     def get(self, request, *args, **kwargs):
         return self.retrieve(request, *args, **kwargs)
@@ -41,7 +54,16 @@ class DjrestDetail(mixins.RetrieveModelMixin,
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
-    
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer    
     
 '''
 class DjrestList(APIView):
